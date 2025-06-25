@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Recipes App",
+    "slug": "recipes-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#e9f7ff"
+    },
+    "android": {
+      "package": "com.recipes.app",
+      "versionCode": 1,
+      "icon": "./assets/icon.png"
+    },
+    "ios": {
+      "bundleIdentifier": "com.recipes.app",
+      "icon": "./assets/icon.png"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "platforms": ["ios", "android"]
+  }
+}
