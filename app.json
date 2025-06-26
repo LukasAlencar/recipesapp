@@ -20,10 +20,20 @@
       "bundleIdentifier": "com.recipes.app",
       "icon": "./assets/icon.png"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "platforms": ["ios", "android"]
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e9f174d0-cc51-4021-ac9c-cbbc588ad47d"
+      }
+    }
   }
 }

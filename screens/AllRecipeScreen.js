@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { recipes } from '../utils/data'
-import { Platform  } from 'react-native'
+import { Platform, StatusBar } from 'react-native';
 
 const isWeb = Platform.OS === 'web';
+const isAndroid = Platform.OS === 'android';
+const statusBarHeight = isAndroid ? StatusBar.currentHeight || 0 : 0;
 
 export default function AllRecipeScreen() {
   const route = useRoute();
@@ -50,7 +52,7 @@ export default function AllRecipeScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    paddingTop: !isWeb ? 70 : 16,
+    paddingTop: !isWeb ? statusBarHeight + 16 : 16,
     backgroundColor: '#fffaf5',
     justifyContent: "center"
   },

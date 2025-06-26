@@ -1,19 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import {useAuth} from '../context/AuthContext'
+import CustomSnackbar from '../components/CustomSnackbar'; 
+import { useRoute } from '@react-navigation/native';
 
 export default function LoginScreen({ navigation }) {
+  const route = useRoute();
   const { login } = useAuth();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [message, setMessage] = useState('');
+  const [type, setType] = useState('error');
 
   const handleLogin = async () => {
     try {
       await login(name, password);
     } catch (error) {
-      alert(error.message); // usuário/senha inválidos
+      setMessage(error.message);
+      setType('error');
+      setSnackbarVisible(true);
     }
   };
+
+  useEffect(() => {
+    if (route.params?.snackbarMessage) {
+      setMessage(route.params.snackbarMessage);
+      setType('success');
+      setSnackbarVisible(true);
+      navigation.setParams({ snackbarMessage: undefined });
+    }
+  }, [route.params]);
 
   return (
     <View style={styles.container}>
@@ -22,17 +40,39 @@ export default function LoginScreen({ navigation }) {
         style={styles.logo}
       />
       <Text style={styles.title}>Receitas Rápidas</Text>
-      <TextInput placeholderTextColor="#888" placeholder="Nome de usuário" value={name} onChangeText={setName} style={styles.input} />
-      <TextInput placeholderTextColor="#888" placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} style={styles.input} />
+
+      <TextInput
+        placeholderTextColor="#888"
+        placeholder="Nome de usuário"
+        value={name}
+        onChangeText={setName}
+        style={styles.input}
+      />
+      <TextInput
+        placeholderTextColor="#888"
+        placeholder="Senha"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+        style={styles.input}
+      />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
+
       <View style={{ flexDirection: 'row', marginTop: 15, gap: 5 }}>
         <Text>Não tem conta?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('register')}>
           <Text style={{ color: '#ff7043' }}>Cadastre-se</Text>
         </TouchableOpacity>
       </View>
+
+      <CustomSnackbar
+        visible={snackbarVisible}
+        message={message}
+        type={type}
+        onDismiss={() => setSnackbarVisible(false)}
+      />
     </View>
   );
 }

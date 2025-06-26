@@ -1,22 +1,28 @@
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useAuth } from '../context/AuthContext'
+import CustomSnackbar from '../components/CustomSnackbar'; 
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarType, setSnackbarType] = useState('error');
+  const [message, setMessage] = useState('');
 
   const { register } = useAuth();
 
   const handleRegister = async () => {
-    try {
-      await register(name, password);
-      alert('Cadastro realizado! Faça login.');
-      navigation.navigate('Login');
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  try {
+    await register(name, password);
+    navigation.navigate('login', { snackbarMessage: 'Cadastro realizado com sucesso!' });
+  } catch (error) {
+    setMessage(error.message);
+    setSnackbarVisible(true);
+    setSnackbarType('error');
+  }
+};
+
 
   return (
     <View style={styles.container}>
@@ -36,6 +42,13 @@ export default function RegisterScreen({ navigation }) {
           <Text style={{ color: '#ff7043' }}>Entrar</Text>
         </TouchableOpacity>
       </View>
+
+       <CustomSnackbar
+        visible={snackbarVisible}
+        message={message}
+        onDismiss={() => setSnackbarVisible(false)}
+        type={snackbarType}
+      />
     </View>
   );
 }

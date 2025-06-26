@@ -1,9 +1,12 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import Item from '../components/Item';
 import { recipes } from "../utils/data" 
-import { Platform  } from 'react-native'
+import { Platform, StatusBar } from 'react-native';
 
 const isWeb = Platform.OS === 'web';
+const isAndroid = Platform.OS === 'android';
+const statusBarHeight = isAndroid ? StatusBar.currentHeight || 0 : 0;
+
 
 export default function RecipesScreen() {
   return (
@@ -24,7 +27,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fffaf5',
     paddingHorizontal: 16,
-    paddingTop: !isWeb ? 70 : 16,
+    paddingTop: !isWeb ? statusBarHeight + 16 : 16,
   },
   title: {
     fontSize: 26,

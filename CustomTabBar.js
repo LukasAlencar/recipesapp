@@ -16,7 +16,7 @@ export default function CustomTabBar({ state, descriptors, navigation, onLogout 
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.tabContainer, { paddingBottom: insets.bottom }]}>
+    <View style={[styles.tabContainer, { paddingBottom: insets.bottom + 10 }]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const iconName =
@@ -66,12 +66,14 @@ export default function CustomTabBar({ state, descriptors, navigation, onLogout 
 const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
-    height: 100,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderTopWidth: 1,
     borderColor: '#ddd',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-around',
+    minHeight: 60,
   },
   tabButton: {
     alignItems: 'center',
@@ -93,3 +95,4 @@ const styles = StyleSheet.create({
     color: '#ff6347',
   },
 });
+

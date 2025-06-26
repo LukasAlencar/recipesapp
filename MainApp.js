@@ -11,6 +11,7 @@ import RecipesScreen from './screens/RecipesScreen';
 import AllRecipeScreen from './screens/AllRecipeScreen';
 import CustomTabBar from './CustomTabBar';
 import { useAuth } from './context/AuthContext'
+import { Provider as PaperProvider } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,18 +49,20 @@ export default function MainApp() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {!logged ? (
-            <>
-              <Stack.Screen name="login" component={LoginScreen} />
-              <Stack.Screen name="register" component={RegisterScreen} />
-            </>
-          ) : (
-            <Stack.Screen name="Tabs" component={MenuTabs} />
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PaperProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              {!logged ? (
+                <>
+                  <Stack.Screen name="login" component={LoginScreen} />
+                  <Stack.Screen name="register" component={RegisterScreen} />
+                </>
+              ) : (
+                <Stack.Screen name="Tabs" component={MenuTabs} />
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+      </PaperProvider>
     </SafeAreaProvider>
   );
 }
